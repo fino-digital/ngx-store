@@ -12,11 +12,6 @@ const OUT_DIR_ESM5 = `./package/esm5`;
 
 shell.echo(`Start building...`);
 
-shell.rm(`-Rf`, `${NPM_DIR}/*`);
-shell.mkdir(`-p`, `./${ESM2015_DIR}`);
-shell.mkdir(`-p`, `./${ESM5_DIR}`);
-shell.mkdir(`-p`, `./${BUNDLES_DIR}`);
-
 /* TSLint with Codelyzer */
 // https://github.com/palantir/tslint/blob/master/src/configs/recommended.ts
 // https://github.com/mgechev/codelyzer
@@ -35,7 +30,7 @@ shell.echo(chalk.green(`AoT compilation completed`));
 /* BUNDLING PACKAGE */
 shell.echo(`Start bundling`);
 shell.echo(`Rollup package`);
-if (shell.exec(`./node_modules/.bin/rollup -c rollup.es.config.js -i ${NPM_DIR}/${PACKAGE}.js -o ${ESM2015_DIR}/${PACKAGE}.js`).code !== 0) {
+if (shell.exec(`./node_modules/.bin/rollup -c rollup.es.config.js -i ${NPM_DIR}/${PACKAGE}.js -o ./${PACKAGE}.js`).code !== 0) {
     shell.echo(chalk.red(`Error: Rollup package failed`));
     shell.exit(1);
 }
