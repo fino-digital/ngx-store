@@ -5,10 +5,10 @@ const chalk = require('chalk');
 
 const PACKAGE = `ngx-store`;
 const NPM_DIR = `dist`;
-const ESM2015_DIR = `${NPM_DIR}/esm2015`;
-const ESM5_DIR = `${NPM_DIR}/esm5`;
-const BUNDLES_DIR = `${NPM_DIR}/bundles`;
-const OUT_DIR_ESM5 = `${NPM_DIR}/package/esm5`;
+const ESM2015_DIR = `./esm2015`;
+const ESM5_DIR = `./esm5`;
+const BUNDLES_DIR = `./bundles`;
+const OUT_DIR_ESM5 = `./package/esm5`;
 
 shell.echo(`Start building...`);
 
@@ -26,7 +26,7 @@ shell.echo(chalk.green(`TSLint completed`));
 
 /* AoT compilation */
 shell.echo(`Start AoT compilation`);
-if (shell.exec(`ngc -p tsconfig-build.json`).code !== 0) {
+if (shell.exec(`./node_modules/.bin/ngc -p tsconfig-build.json`).code !== 0) {
     shell.echo(chalk.red(`Error: AoT compilation failed`));
     shell.exit(1);
 }
@@ -35,7 +35,7 @@ shell.echo(chalk.green(`AoT compilation completed`));
 /* BUNDLING PACKAGE */
 shell.echo(`Start bundling`);
 shell.echo(`Rollup package`);
-if (shell.exec(`rollup -c rollup.es.config.js -i ${NPM_DIR}/${PACKAGE}.js -o ${ESM2015_DIR}/${PACKAGE}.js`).code !== 0) {
+if (shell.exec(`./node_modules/.bin/rollup -c rollup.es.config.js -i ${NPM_DIR}/${PACKAGE}.js -o ${ESM2015_DIR}/${PACKAGE}.js`).code !== 0) {
     shell.echo(chalk.red(`Error: Rollup package failed`));
     shell.exit(1);
 }
